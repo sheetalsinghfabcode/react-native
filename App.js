@@ -1,20 +1,54 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect, useRef } from "react";
+import { View, StyleSheet, Button } from "react-native";
+import InstagramPostSkeleton from "./components/InstagramPostSkeleton";
+import InstagramPost from "./components/InstagramPost";
+import TwitterComponent from "./components/TwitterComponent";
+import { TwitterPost, TwitterPostSkeleton } from "./components/TwitterPost";
 
-export default function App() {
+const App = () => {
+  const [loading, setLoading] = useState(true);
+
+  const video = useRef(null);
+  const [statusVideo, setStatusVideo] = useState();
+
+  useEffect(() => {
+    // Simulating loading delay
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust the delay time as needed
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      
+      <TwitterPost />
+      {/* {loading ? (
+        <>
+          <InstagramPostSkeleton />
+        </>
+      ) : ( */}
+      <InstagramPost />
+      {/* )} */}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f0f0f0",
+  },
+  video: {
+    flex: 1,
+    alignSelf: "stretch",
+  },
+  button: {
+    margin: 16,
   },
 });
+
+export default App;
